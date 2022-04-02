@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://jawline/Jawline.cs" type="Script" id=1]
+
+[sub_resource type="Curve3D" id=1]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -2.47742, 0.577301, 4.66037, 0, 0, 0, 0, 0, 0, -1.15708, 0.454025, 5.37133, 0, 0, 0, 0, 0, 0, 0.137865, 0.478683, 5.47289, 0, 0, 0, 0, 0, 0, 1.4836, 0.577301, 5.37133, 0, 0, 0, 0, 0, 0, 2.67698, 0.577301, 4.55881 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0 )
+}
+
+[node name="Jawline" type="Spatial"]
+script = ExtResource( 1 )
+_radius = 1.5
+
+[node name="Path" type="Path" parent="."]
+curve = SubResource( 1 )

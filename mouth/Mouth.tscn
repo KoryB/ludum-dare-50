@@ -1,19 +1,30 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://mouth/teeth/Incisor.tscn" type="PackedScene" id=1]
+[ext_resource path="res://jawline/Jawline.tscn" type="PackedScene" id=2]
 
 [node name="Mouth" type="Spatial"]
 
 [node name="BottomTeeth" type="Spatial" parent="."]
 
-[node name="Incisor" parent="BottomTeeth" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65236, 0.439742, 5.34889 )
+[node name="Incisor4" parent="BottomTeeth" instance=ExtResource( 1 )]
+transform = Transform( 0.808052, 0, -0.589112, 0, 1, 0, 0.589112, 0, 0.808052, -1.8815, -9.53674e-07, 5.02746 )
 
 [node name="Incisor2" parent="BottomTeeth" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.652, 0.44, 5.349 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.501182, 0, 5.47492 )
+
+[node name="Incisor1" parent="BottomTeeth" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.671577, 0, 5.4288 )
 
 [node name="Incisor3" parent="BottomTeeth" instance=ExtResource( 1 )]
-transform = Transform( 0.766415, 0, -0.642346, 0, 1, 0, 0.642346, 0, 0.766415, -1.87593, 0.377336, 5.04535 )
+transform = Transform( 0.825311, 0, 0.564679, 0, 1, 0, -0.564679, 0, 0.825311, 2.05694, 0, 4.93949 )
 
-[node name="Incisor4" parent="BottomTeeth" instance=ExtResource( 1 )]
-transform = Transform( 0.824176, 0, 0.566334, 0, 1, 0, -0.566334, 0, 0.824176, 1.87078, 0.44, 5.11819 )
+[node name="BottomJawline" parent="." instance=ExtResource( 2 )]
+_radius = 1.2
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="BottomJawline" method="_on_Timer_timeout"]
+
+[editable path="BottomJawline"]

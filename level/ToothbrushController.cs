@@ -7,11 +7,10 @@ public class ToothbrushController : Spatial
     private const float RayLength = 1000;
     
     [Export]
-    private NodePath _toothbrush_path;
+    private NodePath _toothbrush_path = "Toothbrush";
     private Toothbrush _toothbrush;
     
     private Vector3 _previous_brush_target;
-    private Transform? _target_transform;
     
     // Declare member variables here. Examples:
     // private int a = 2;
@@ -78,6 +77,6 @@ public class ToothbrushController : Spatial
             z = _toothbrush.Transform.basis.z;
         }
             
-        return new Transform(x, y, z, brush_target);
+        return new Transform(x.Normalized(), y.Normalized(), z.Normalized(), brush_target);
     }
 }
