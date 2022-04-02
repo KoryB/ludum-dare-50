@@ -1,0 +1,19 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ld 50 - Delay The Inevitable", "Ld 50 - Delay The Inevitable.csproj", "{971EB640-86CB-4AC6-995C-FFCD179AA77E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	ExportDebug|Any CPU = ExportDebug|Any CPU
+	ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{971EB640-86CB-4AC6-995C-FFCD179AA77E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{971EB640-86CB-4AC6-995C-FFCD179AA77E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{971EB640-86CB-4AC6-995C-FFCD179AA77E}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{971EB640-86CB-4AC6-995C-FFCD179AA77E}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{971EB640-86CB-4AC6-995C-FFCD179AA77E}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{971EB640-86CB-4AC6-995C-FFCD179AA77E}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://mouth/teeth/Incisor.tscn" type="PackedScene" id=1]
+
+[node name="Mouth" type="Spatial"]
+
+[node name="BottomTeeth" type="Spatial" parent="."]
+
+[node name="Incisor" parent="BottomTeeth" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65236, 0.439742, 5.34889 )
+
+[node name="Incisor2" parent="BottomTeeth" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.652, 0.44, 5.349 )
+
+[node name="Incisor3" parent="BottomTeeth" instance=ExtResource( 1 )]
+transform = Transform( 0.766415, 0, -0.642346, 0, 1, 0, 0.642346, 0, 0.766415, -1.87593, 0.377336, 5.04535 )
+
+[node name="Incisor4" parent="BottomTeeth" instance=ExtResource( 1 )]
+transform = Transform( 0.824176, 0, 0.566334, 0, 1, 0, -0.566334, 0, 0.824176, 1.87078, 0.44, 5.11819 )

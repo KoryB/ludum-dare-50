@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="SpatialMaterial" id=1]
+params_diffuse_mode = 4
+params_specular_mode = 2
+albedo_color = Color( 0.992157, 1, 0.717647, 1 )
+roughness = 0.3
+
+[sub_resource type="CapsuleShape" id=2]
+height = 1.5
+
+[node name="Tooth" type="StaticBody"]
+
+[node name="Model" type="CSGSphere" parent="."]
+radial_segments = 16
+rings = 10
+material = SubResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 2 )
