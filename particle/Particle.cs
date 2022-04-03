@@ -1,8 +1,11 @@
 using Godot;
 using System;
+using System.Linq;
 
 public class Particle : StaticBody, IBrushable
 {
+    public const String Group = "Particle";
+
     [Signal]
     public delegate void OnDeath();
 
@@ -32,6 +35,16 @@ public class Particle : StaticBody, IBrushable
         {
             Die();
         }
+    }
+    
+    public bool IsFloating()
+    {
+        var is_touching_tooth = _area.GetOverlappingBodies()
+            .Cast<Godot.Object>()
+            .Where(x => x is Tooth)
+            .Any();
+            
+        return !is_touching_tooth;
     }
     
     public void Die()

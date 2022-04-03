@@ -22,10 +22,9 @@ public class GameManager : Node
     private Control _shop_screen_container;
 
     private float _particle_spawn_timer = 0.0f;
-    private float _wave_timer = 10.0f;
+    private float _wave_timer = 0.0f;
     private int _wave_counter = 1;
-    private int _score = 0;
-    private int _money = 0;
+    private int _money = 5;
 
     private bool _is_active = true;
     
@@ -43,6 +42,8 @@ public class GameManager : Node
             UpdateParticleSpawn(delta);
             UpdateWaveTimer(delta);
             UpdateProgressBar();
+            UpdateLabels();
+            UpdateGameOver();
         }
     }
     
@@ -53,7 +54,12 @@ public class GameManager : Node
         if (_particle_spawn_timer > GetWaveParticleDelay())
         {
             _particle_spawn_timer = 0.0f;
-            EmitSignal(nameof(SpawnParticle));
+            var particle = GetNode<Mouth>("../Mouth").SpawnParticleRandom();
+            
+            if (particle != null)
+            {
+                AttachDeathListener(particle);
+            }
         }
     }
     
@@ -67,9 +73,24 @@ public class GameManager : Node
         }
     }
     
+    private void UpdateLabels()
+    {
+        GetNode<Label>("../SplitScreenContainer/Score").Text = $"Score: {PlayerVariables.Score}";
+        GetNode<Label>("../SplitScreenContainer/Score/Money").Text = $"Money: {_money}";
+        GetNode<Label>("../SplitScreenContainer/Score/Money/Wave").Text = $"Wave: {_wave_counter}";
+    }
+    
     private void UpdateProgressBar()
     {
         _progress_bar.Value = 1.0f - GetWaveCompletionPercentage();
+    }
+    
+    private void UpdateGameOver()
+    {
+        if (GetNode<Mouth>("../Mouth").IsDead())
+        {
+            GetTree().ChangeScene("res://level/end/End.tscn");
+        }
     }
     
     private void OnWaveComplete()
@@ -86,6 +107,28 @@ public class GameManager : Node
         
         _wave_counter += 1;
         _is_active = true;
+        
+        ClearFloatingParticles();
+    }
+    
+    private void ClearFloatingParticles()
+    {
+        foreach (Node n in GetTree().GetNodesInGroup(Particle.Group))
+        {
+            if (n is Particle p)
+            {
+                if (p.IsFloating())
+                {
+                    p.QueueFree();
+                }
+            }
+        }
+    }
+    
+    private void AttachDeathListener(Node particle)
+    {
+        GD.Print("Particle Connected");
+        particle.Connect("OnDeath", this, "OnParticleDeath");
     }
     
     public float GetWaveCompletionPercentage()
@@ -126,6 +169,13 @@ public class GameManager : Node
     public void PullTeeth()
     {
         GetNode<Mouth>("../Mouth").PullTeeth();
+    }
+    
+    
+    private void OnParticleDeath()
+    {
+        PlayerVariables.Score += 1;
+        _money += 1;
     }
 
 

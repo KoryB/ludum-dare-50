@@ -72,15 +72,15 @@ public class Mouth : Spatial
     
         if (jawline_index == BottomJawlineIndex)
         {
-            if (!HasBottomTeeth())
+            if (HasBottomTeeth())
             {
-                _jawlines[BottomJawlineIndex].SpawnParticleRandom();
+                return _jawlines[BottomJawlineIndex].SpawnParticleRandom();
             }
             else
             {
                 if (HasTopTeeth())
                 {
-                    _jawlines[TopJawlineIndex].SpawnParticleRandom();
+                    return _jawlines[TopJawlineIndex].SpawnParticleRandom();
                 }
             }
         }
@@ -88,13 +88,13 @@ public class Mouth : Spatial
         {
             if (HasTopTeeth())
             {
-                _jawlines[TopJawlineIndex].SpawnParticleRandom();
+                return _jawlines[TopJawlineIndex].SpawnParticleRandom();
             }
             else
             {
                 if (HasBottomTeeth())
                 {
-                    _jawlines[BottomJawlineIndex].SpawnParticleRandom();
+                    return _jawlines[BottomJawlineIndex].SpawnParticleRandom();
                 }
             }
         }
@@ -104,14 +104,19 @@ public class Mouth : Spatial
     
     public bool IsDead()
     {
-        return !GetTeethChildren().Any() || GetTeethChildren().All(t => t.IsDead());
+        return !GetTeethChildren().Any() || 
+            GetNode<Spatial>("TopTeeth").GetChildren().Cast<Tooth>().All(t => t.IsDead()) ||
+            GetNode<Spatial>("BottomTeeth").GetChildren().Cast<Tooth>().All(t => t.IsDead());
     }
     
     public void WhitenTeeth()
     {
         foreach(Tooth tooth in GetTeethChildren())
         {
-            tooth.Whiten();
+            if (!tooth.IsDead())
+            {
+                tooth.Whiten();
+            }
         }
     }
 

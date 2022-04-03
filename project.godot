@@ -11,8 +11,12 @@ config_version=4
 [application]
 
 config/name="Ld 50 - Delay The Inevitable"
-run/main_scene="res://level/TestLevel.tscn"
+run/main_scene="res://level/intro/Intro.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+PlayerVariables="*res://utils/PlayerVariables.cs"
 
 [physics]
 

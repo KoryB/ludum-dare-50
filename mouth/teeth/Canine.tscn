@@ -10,7 +10,7 @@
 transform = Transform( 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="CollisionShape" parent="." index="1"]
-transform = Transform( 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0 )
+transform = Transform( 1.2, 0, 0, 0, 2.2, 0, 0, 0, 1.2, 0, 0, 0 )
 shape = SubResource( 1 )
 
 [node name="CollisionShape" parent="Area" index="0"]

@@ -65,7 +65,7 @@ public class Tooth : StaticBody
     
     private void UpdateDeath()
     {
-        if (_health < 0.0)
+        if (_health <= 0.0)
         {
             EmitSignal(nameof(OnDeath));
             _is_dead = true;

@@ -127,4 +127,10 @@ public class StoreManager : Node
     {
         GetNode<Label>("../ShopScreenContainer/Title/LblNotEnoughMoney").Visible = false;
     }
+
+
+    private void _on_BtnLeave_pressed()
+    {
+        LeaveStore();
+    }
 }

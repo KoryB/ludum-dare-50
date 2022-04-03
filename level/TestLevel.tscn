@@ -207,6 +207,36 @@ step = 0.001
 value = 1.0
 percent_visible = false
 
+[node name="Score" type="Label" parent="SplitScreenContainer"]
+anchor_left = 0.016
+anchor_top = 0.392
+anchor_right = 0.095
+anchor_bottom = 0.463
+margin_left = -0.384001
+margin_top = -0.200012
+margin_right = -0.280006
+margin_bottom = 0.199982
+theme = ExtResource( 7 )
+text = "Score: "
+
+[node name="Money" type="Label" parent="SplitScreenContainer/Score"]
+anchor_top = 1.0
+anchor_right = 1.086
+anchor_bottom = 2.0
+margin_right = 0.0339966
+margin_bottom = -43.0
+theme = ExtResource( 7 )
+text = "Money: "
+
+[node name="Wave" type="Label" parent="SplitScreenContainer/Score/Money"]
+anchor_top = 1.0
+anchor_right = 0.886
+anchor_bottom = 2.0
+margin_right = 0.0319977
+margin_bottom = -43.0
+theme = ExtResource( 7 )
+text = "Wave: "
+
 [node name="ShopScreenContainer" type="Control" parent="."]
 visible = false
 anchor_right = 1.0
@@ -314,6 +344,18 @@ margin_bottom = 21.5
 custom_colors/font_color = Color( 1, 0.337255, 0.337255, 1 )
 text = "Not Enough Money :((((("
 
+[node name="BtnLeave" type="Button" parent="ShopScreenContainer"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -105.0
+margin_top = -86.0
+margin_right = 105.0
+margin_bottom = -59.0
+theme = ExtResource( 7 )
+text = "Leave The Store!"
+
 [connection signal="SpawnParticle" from="GameManager" to="Mouth" method="_on_GameManager_SpawnParticle"]
 [connection signal="WaveComplete" from="GameManager" to="StoreManager" method="_on_GameManager_WaveComplete"]
 [connection signal="OnLeaveStore" from="StoreManager" to="GameManager" method="_on_StoreManager_OnLeaveStore"]
@@ -321,3 +363,4 @@ text = "Not Enough Money :((((("
 [connection signal="pressed" from="ShopScreenContainer/VBoxContainer/BtnToothbrush" to="StoreManager" method="_on_BtnToothbrush_pressed"]
 [connection signal="pressed" from="ShopScreenContainer/VBoxContainer/BtnWhiten" to="StoreManager" method="_on_BtnWhiten_pressed"]
 [connection signal="pressed" from="ShopScreenContainer/VBoxContainer/BtnPull" to="StoreManager" method="_on_BtnPull_pressed"]
+[connection signal="pressed" from="ShopScreenContainer/BtnLeave" to="StoreManager" method="_on_BtnLeave_pressed"]
