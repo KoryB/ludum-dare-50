@@ -1,10 +1,16 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://mouth/teeth/Incisor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://jawline/Jawline.tscn" type="PackedScene" id=2]
 [ext_resource path="res://mouth/teeth/Canine.tscn" type="PackedScene" id=3]
 [ext_resource path="res://mouth/teeth/Molar.tscn" type="PackedScene" id=4]
 [ext_resource path="res://mouth/Mouth.cs" type="Script" id=5]
+
+[sub_resource type="Curve3D" id=1]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -4.77721, 0, -1.20943, 0, 0, 0, 0, 0, 0, -4.59469, 0, 0.0682315, 0, 0, 0, 0, 0, 0, -4.22964, 0, 1.34589, 0, 0, 0, 0, 0, 0, -3.8646, 0, 2.48666, 0, 0, 0, 0, 0, 0, -3.26735, 0.233329, 3.58181, 0, 0, 0, 0, 0, 0, -2.23535, 0.48652, 4.7222, 0, 0, 0, 0, 0, 0, -1.25733, 0.52564, 5.31577, 0, 0, 0, 0, 0, 0, -0.00545445, 0.52564, 5.45265, 0, 0, 0, 0, 0, 0, 1.44202, 0.564762, 5.31577, 0, 0, 0, 0, 0, 0, 2.57653, 0.447398, 4.54004, 0, 0, 0, 0, 0, 0, 3.33693, 0.326019, 3.56641, 0, 0, 0, 0, 0, 0, 3.80136, 0, 2.48666, 0, 0, 0, 0, 0, 0, 4.25766, 0, 1.25463, 0, 0, 0, 0, 0, 0, 4.7596, 0, -0.159922, 0, 0, 0, 0, 0, 0, 4.62271, 0, -1.20943 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+}
 
 [node name="Mouth" type="Spatial"]
 script = ExtResource( 5 )
@@ -55,6 +61,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.62, 0, -0.519 )
 
 [node name="BottomJawline" parent="." instance=ExtResource( 2 )]
 _radius = 1.2
+
+[node name="Path" parent="BottomJawline" index="0"]
+curve = SubResource( 1 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5

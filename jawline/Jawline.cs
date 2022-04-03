@@ -25,12 +25,18 @@ public class Jawline : Spatial
     {
         _path = GetNode<Path>("Path");
         _curve = _path.Curve;
-    }
-    
-    
-    public override void _Process(float delta)
-    {
         
+        for (int i = 0; i < _curve.GetPointCount(); i++)
+        {
+            GD.Print(_curve.GetPointPosition(i));
+        }
+        
+        GD.Print("---");
+        
+        for (int i = 0; i < _curve.GetBakedPoints().Count(); i++)
+        {
+            GD.Print(_curve.GetBakedPoints()[i]);
+        }
     }
 
 
