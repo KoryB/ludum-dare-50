@@ -1,17 +1,28 @@
 using Godot;
 using System;
+using System.Linq;
 
 public class Tooth : StaticBody
 {
+    public static float RotStrength = 0.5f;
+
+    [Signal]
+    public delegate void OnDeath();
+
     private Gradient _tooth_decay_gradient;
     
     [Export]
     protected float _max_health = 10.0f;
     protected float _health;
     
+    protected bool _is_dead = false;
+    
+    protected Area _area;
+    
     public override void _Ready()
     {
         _health = _max_health;
+        _area = GetNode<Area>("Area");
     
         SetupGradient();
         SetupMaterial();
@@ -20,6 +31,8 @@ public class Tooth : StaticBody
     public override void _Process(float delta)
     {
         UpdateColor();
+        UpdateDeath();
+        RotNeighbors(delta);
     }
     
     private void SetupGradient()
@@ -48,6 +61,36 @@ public class Tooth : StaticBody
         new_material.Roughness = material.Roughness;
         
         model.Material = new_material;
+    }
+    
+    private void UpdateDeath()
+    {
+        if (_health < 0.0)
+        {
+            EmitSignal(nameof(OnDeath));
+            _is_dead = true;
+        }
+    }
+    
+    private void RotNeighbors(float delta)
+    {
+        if (_is_dead)
+        {
+            var neighbors = _area.GetOverlappingBodies()
+                .Cast<Godot.Object>()
+                .Where(x => x is Tooth)
+                .Cast<Tooth>();
+                
+            foreach (Tooth neighbor in neighbors)
+            {
+                neighbor.TakeDamage(RotStrength * delta);
+            }
+        }
+    }
+    
+    public bool IsDead()
+    {
+        return _is_dead;
     }
     
     public void TakeDamage(float damage)

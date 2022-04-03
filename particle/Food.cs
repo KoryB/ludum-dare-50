@@ -37,9 +37,6 @@ public class Food : Particle
                 .Where(x => x is Tooth)
                 .Cast<Tooth>()
                 .ToList();
-                
-            GD.Print(_area.GetOverlappingBodies());
-            GD.Print(String.Join(", ", _touching_teeth));
         }
     }
     
