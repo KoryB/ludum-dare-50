@@ -87,8 +87,6 @@ public class Jawline : Spatial
             .Normalized();
         var normal = forward.Cross(up).Normalized();
         
-        GD.Print(Name, " Up: ", up);
-        
         var inflation_direction = up
             .Rotated(forward, inflation_angle)
             .Rotated(normal, forward_angle);

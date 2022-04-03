@@ -6,6 +6,9 @@ using System.Linq;
 
 public class Mouth : Spatial
 {
+    private const int BottomJawlineIndex = 0;
+    private const int TopJawlineIndex = 1;
+
     [Signal]
     public delegate void OnDeath();
     
@@ -27,25 +30,100 @@ public class Mouth : Spatial
         if (IsDead())
         {
             EmitSignal(nameof(OnDeath));
-            GD.Print("Teeth dead!");
         }
     }
     
     private IEnumerable<Tooth> GetTeethChildren()
     {
-        return GetNode<Spatial>("BottomTeeth")
-            .GetChildren().Cast<Godot.Object>()
-            .Where(x => x is Tooth).Cast<Tooth>();
+        var teeth_nodes = new List<Spatial>()
+        {
+            GetNode<Spatial>("TopTeeth"),
+            GetNode<Spatial>("BottomTeeth")
+        };
+        
+        var teeth = new List<Tooth>();
+        
+        foreach (Spatial t in teeth_nodes)
+        {
+            teeth.AddRange(
+                t.GetChildren()
+                    .Cast<Godot.Object>()
+                    .Where(x => x is Tooth)
+                    .Cast<Tooth>()
+            );
+        }
+        
+        return teeth;
+    }
+    
+    public bool HasTopTeeth()
+    {
+        return GetNode<Spatial>("TopTeeth").GetChildCount() != 0;
+    }
+    
+    public bool HasBottomTeeth()
+    {
+        return GetNode<Spatial>("BottomTeeth").GetChildCount() != 0;
     }
     
     public Node SpawnParticleRandom()
     {
-        return _jawlines[_rng.RandiRange(0, 1)].SpawnParticleRandom();
+        var jawline_index = _rng.RandiRange(0, 1);
+    
+        if (jawline_index == BottomJawlineIndex)
+        {
+            if (!HasBottomTeeth())
+            {
+                _jawlines[BottomJawlineIndex].SpawnParticleRandom();
+            }
+            else
+            {
+                if (HasTopTeeth())
+                {
+                    _jawlines[TopJawlineIndex].SpawnParticleRandom();
+                }
+            }
+        }
+        else
+        {
+            if (HasTopTeeth())
+            {
+                _jawlines[TopJawlineIndex].SpawnParticleRandom();
+            }
+            else
+            {
+                if (HasBottomTeeth())
+                {
+                    _jawlines[BottomJawlineIndex].SpawnParticleRandom();
+                }
+            }
+        }
+    
+        return null;
     }
     
     public bool IsDead()
     {
-        return GetTeethChildren().All(t => t.IsDead());
+        return !GetTeethChildren().Any() || GetTeethChildren().All(t => t.IsDead());
+    }
+    
+    public void WhitenTeeth()
+    {
+        foreach(Tooth tooth in GetTeethChildren())
+        {
+            tooth.Whiten();
+        }
+    }
+
+    public void PullTeeth()
+    {
+        foreach(Tooth tooth in GetTeethChildren())
+        {
+            if (tooth.IsDead())
+            {
+                tooth.QueueFree();
+            }
+        }
     }
 
 

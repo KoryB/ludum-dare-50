@@ -93,6 +93,11 @@ public class Tooth : StaticBody
         return _is_dead;
     }
     
+    public void Whiten()
+    {
+        _health = _max_health;
+    }
+    
     public void TakeDamage(float damage)
     {
         _health -= damage;
