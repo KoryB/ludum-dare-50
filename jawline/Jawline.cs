@@ -26,41 +26,53 @@ public class Jawline : Spatial
         _path = GetNode<Path>("Path");
         _curve = _path.Curve;
     }
+    
 
-
-    private Node SpawnParticle(float path_location)
+    public Node SpawnParticleRandom()
     {
-        var inflation_angle_degrees = _rng.RandfRange(-half_inflation_angle_range_degrees, half_inflation_angle_range_degrees);
-        var forward_angle_degrees = _rng.RandfRange(-half_forward_angle_range_degrees, half_forward_angle_range_degrees);
+        var path_location = _rng.Randf();
+        var inflation_angle = MathUtils.DegreesToRadians(_rng.RandfRange(-half_inflation_angle_range_degrees, half_inflation_angle_range_degrees));
+        var forward_angle = MathUtils.DegreesToRadians(_rng.RandfRange(-half_forward_angle_range_degrees, half_forward_angle_range_degrees));
         
-        Vector3? final_position = GetToothPosition(
-            path_location, 
-            MathUtils.DegreesToRadians(inflation_angle_degrees),
-            MathUtils.DegreesToRadians(forward_angle_degrees)
-        );
+        var particle = SpawnParticle(path_location, inflation_angle, forward_angle);
         
-        while (!final_position.HasValue)
+        while (particle == null)
         {
             path_location += _rng.RandfRange(-0.3f, 0.3f);
-            inflation_angle_degrees = _rng.RandfRange(-half_inflation_angle_range_degrees, half_inflation_angle_range_degrees);
-            forward_angle_degrees = _rng.RandfRange(-half_forward_angle_range_degrees, half_forward_angle_range_degrees);
+            inflation_angle += _rng.RandfRange(-0.3f, 0.3f);
+            forward_angle += _rng.RandfRange(-0.3f, 0.3f);
             
-            final_position = GetToothPosition(
-                path_location, 
-                MathUtils.DegreesToRadians(inflation_angle_degrees),
-                MathUtils.DegreesToRadians(forward_angle_degrees)
-            );
+            particle = SpawnParticle(path_location, inflation_angle, forward_angle);
         }
         
-        var particle = (Particle) ParticleScene.Instance();
-        AddChild(particle);
-        
-        particle.Translation = final_position.Value;
         return particle;
     }
     
     
-    private Vector3? GetToothPosition(float path_location, float inflation_angle, float forward_angle)
+    public Node SpawnParticle(float path_location, float inflation_angle, float forward_angle)
+    {
+        var final_position = GetToothPosition(
+            path_location, 
+            inflation_angle,
+            forward_angle
+        );
+        
+        if (final_position.HasValue)
+        {
+            var particle = (Particle) ParticleScene.Instance();
+            AddChild(particle);
+            
+            particle.Translation = final_position.Value;
+            return particle;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    
+    
+    public Vector3? GetToothPosition(float path_location, float inflation_angle, float forward_angle)
     {
         var forward_location = path_location >= 1.0f? 
             path_location - 0.01f : 
@@ -93,10 +105,5 @@ public class Jawline : Spatial
     private Godot.Collections.Dictionary RaycastToTeeth(Vector3 from, Vector3 direction)
     {
         return GetWorld().DirectSpaceState.IntersectRay(from, from + RayLength * direction);
-    }
-    
-    private void _on_Timer_timeout()
-    {
-        SpawnParticle(_rng.Randf());
     }
 }

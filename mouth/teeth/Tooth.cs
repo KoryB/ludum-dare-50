@@ -4,7 +4,7 @@ using System.Linq;
 
 public class Tooth : StaticBody
 {
-    public static float RotStrength = 0.5f;
+    public static float RotStrength = 0.25f;
 
     [Signal]
     public delegate void OnDeath();

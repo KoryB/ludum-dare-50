@@ -5,3 +5,6 @@
 
 [node name="Food" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+
+[node name="Model" parent="." index="0"]
+radius = 0.4
