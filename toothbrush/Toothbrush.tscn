@@ -3,13 +3,15 @@
 [ext_resource path="res://toothbrush/Toothbrush.cs" type="Script" id=1]
 
 [sub_resource type="SpatialMaterial" id=1]
-albedo_color = Color( 0.9, 0.3414, 0.018, 1 )
+albedo_color = Color( 0.901961, 0.341176, 0.0196078, 1 )
 
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 0.4, 0.5, 1 )
 
 [node name="Toothbrush" type="Spatial"]
 script = ExtResource( 1 )
+_strength_progression = [ 1.0, 2.0, 3.0 ]
+_color_progression = [ Color( 0.901961, 0.341176, 0.0196078, 1 ), Color( 0.270588, 0.921569, 0.419608, 1 ), Color( 0.101961, 0.862745, 0.792157, 1 ) ]
 
 [node name="Brush" type="CSGBox" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 7.45058e-09 )

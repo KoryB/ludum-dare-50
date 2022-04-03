@@ -9,10 +9,16 @@ public class Toothbrush : Spatial, IBrush
     private float _transform_interpolation_timer = 0.0f;
     
     [Export]
-    private float _strength = 1.0f;
+    private Godot.Collections.Array _strength_progression;
+    [Export]
+    private Godot.Collections.Array _color_progression;
+    
+    [Export]
+    private int _level = 0;
     
     private ISet<IBrushable> _cleaned_cache = new HashSet<IBrushable>();
     
+    private CSGBox _handle;
     private Area _brush_area;
     
     private Transform _previous_transform;
@@ -23,6 +29,8 @@ public class Toothbrush : Spatial, IBrush
     {
         _previous_transform = this.Transform;
         _target_transform = this.Transform;
+        
+        _handle = GetNode<CSGBox>("Handle");
         _brush_area = GetNode<Area>("BrushArea");
     }
 
@@ -36,14 +44,13 @@ public class Toothbrush : Spatial, IBrush
         _transform_interpolation_timer = 0.0f;
         _previous_transform = this.Transform;
         _target_transform = target_transform;
-        
-        
     }
     
     public override void _Process(float delta)
     {
         UpdateTransformTimer(delta);
         UpdateTransform(delta);
+        UpdateColor();
     }
     
     public override void _PhysicsProcess(float delta)
@@ -69,6 +76,14 @@ public class Toothbrush : Spatial, IBrush
         {
             // pass
         }        
+    }
+    
+    private void UpdateColor()
+    {
+        if (_handle.Material is SpatialMaterial sm)
+        {
+            sm.AlbedoColor = GetColor();
+        }
     }
     
     private void UpdateBrushing(float delta)
@@ -104,8 +119,18 @@ public class Toothbrush : Spatial, IBrush
         return GetTransformInterpolationValue() < 1.0;
     }
     
+    public void LevelUp()
+    {
+        _level = Math.Min(_level + 1, _strength_progression.Count - 1);
+    }
+    
     public float GetStrength()
     {
-        return _strength;
+        return (float) _strength_progression[_level];
+    }
+    
+    public Color GetColor()
+    {
+        return (Color) _color_progression[_level];
     }
 }

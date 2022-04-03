@@ -7,35 +7,26 @@ using System.Linq;
 public class Mouth : Spatial
 {
     [Signal]
-    public delegate void OnDeath();    
-
-    private IList<Tooth> _teeth;
-    
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
-    {        
-        SetupTeeth();
-    }
+    public delegate void OnDeath();
     
     public override void _Process(float delta)
     {
-        if (_teeth.All(t => t.IsDead()))
+        if (IsDead())
         {
             EmitSignal(nameof(OnDeath));
             GD.Print("Teeth dead!");
         }
     }
     
-    private void SetupTeeth()
-    {
-        _teeth = GetTeethChildren();
-    }
-    
-    private IList<Tooth> GetTeethChildren()
+    private IEnumerable<Tooth> GetTeethChildren()
     {
         return GetNode<Spatial>("BottomTeeth")
             .GetChildren().Cast<Godot.Object>()
-            .Where(x => x is Tooth).Cast<Tooth>()
-            .ToList();
+            .Where(x => x is Tooth).Cast<Tooth>();
+    }
+    
+    public bool IsDead()
+    {
+        return GetTeethChildren().All(t => t.IsDead());
     }
 }

@@ -3,29 +3,33 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class GridCameraController : GridContainer
+public class GridCameraController : Control
 {
-    private const int ColumnsGridView = 2;
-    private const int ColumnsFullscreen = 1;
+    private const int FocusChildIndex = 1;
 
-    private const String TopLeft = "TL";
-    private const String TopRight = "TR";
-    private const String BottomLeft = "BL";
-    private const String BottomRight = "BR";
+    private const String Right = "Right";
+    private const String Rear = "Rear";
+    private const String Left = "Left";
+    private const String Front = "Front";
 
-
-    private bool _is_fullscreen = false;
     private IDictionary<String, ViewportContainer> _viewports;
+    private Control _v_split;
+    private Control _split_view;
 
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
-    {
-        _viewports = new List<String> {TopLeft, TopRight, BottomLeft, BottomRight}
-            .ToDictionary(
-                s => s,
-                s => GetNode<ViewportContainer>($"ViewportContainer{s}")
-            );
+    {            
+        _viewports = new Dictionary<String, ViewportContainer> 
+        {
+            {Right, GetNode<ViewportContainer>("VSplit/SplitView/ViewportContainerRight")},
+            {Rear, GetNode<ViewportContainer>("VSplit/SplitView/ViewportContainerRear")},
+            {Left, GetNode<ViewportContainer>("VSplit/SplitView/ViewportContainerLeft")},
+            {Front, GetNode<ViewportContainer>("VSplit/ViewportContainerFront")},
+        };
+        
+        _v_split = GetNode<Control>("VSplit");
+        _split_view = GetNode<Control>("VSplit/SplitView");
     }
     
     public override void _Input(InputEvent @event)
@@ -41,61 +45,50 @@ public class GridCameraController : GridContainer
     
     private void OnDoubleClick(InputEventMouseButton mouse_event)
     {
-        if (_is_fullscreen)
+        ChangeFocusView(mouse_event);
+    }
+    
+    private void ChangeFocusView(InputEventMouseButton mouse_event)
+    {
+        ViewportContainer to_focus = GetViewportContainerFromMousePosition();
+        
+        if (to_focus != null && !IsViewportContainerFocused(to_focus))
         {
-            ReturnToGridView();
-        }
-        else
-        {
-            FullscreenFromEvent(mouse_event);
+            var focused = GetFocusedView();
+            
+            _v_split.RemoveChild(focused);
+            _split_view.RemoveChild(to_focus);
+            
+            _v_split.AddChild(to_focus);
+            _split_view.AddChild(focused);
         }
     }
     
-    private void ReturnToGridView()
+    private ViewportContainer GetViewportContainerFromMousePosition()
     {
-        _is_fullscreen = false;
-        Columns = ColumnsGridView;
-    
         foreach (var kvp in _viewports)
         {
-            var vc = kvp.Value;
+            var v = kvp.Value;
+            var viewport = v.GetNode<Viewport>("Viewport");
+            var mouse_pos = viewport.GetMousePosition();
+            var is_point_in_viewport = viewport.GetVisibleRect().HasPoint(mouse_pos);
             
-            vc.Visible = true;
+            if (is_point_in_viewport)
+            {
+                return v;
+            }
         }
         
-        TriggerContainerUpdate();
+        return null;
     }
     
-    private void FullscreenFromEvent(InputEventMouseButton mouse_event)
+    private bool IsViewportContainerFocused(ViewportContainer viewport_container)
     {
-        _is_fullscreen = true;
-        Columns = ColumnsFullscreen;
-        ViewportContainer v = GetViewportContainerFromScreenPosition(mouse_event.Position);    
-       
-        foreach (var kvp in _viewports)
-        {
-            var vc = kvp.Value;
-            
-            vc.Visible = vc == v;
-        }
-        
-        TriggerContainerUpdate();
+        return viewport_container.GetParent() == _v_split;
     }
     
-    private ViewportContainer GetViewportContainerFromScreenPosition(Vector2 screen_position)
+    private ViewportContainer GetFocusedView()
     {
-        var container_size = RectSize / 2.0f;
-        
-        var is_left = screen_position.x / container_size.x < 1.0;
-        var is_top = screen_position.y / container_size.y < 1.0;
-        
-        return is_top?
-            (is_left? _viewports[TopLeft] : _viewports[TopRight]) :
-            (is_left? _viewports[BottomLeft] : _viewports[BottomRight]);
-    }
-    
-    private void TriggerContainerUpdate()
-    {
-        SetSize(RectSize);
+        return _v_split.GetChild(FocusChildIndex) as ViewportContainer;
     }
 }

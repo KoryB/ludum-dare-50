@@ -19,15 +19,96 @@ spot_angle = 49.9728
 [node name="Toothbrush" parent="." instance=ExtResource( 2 )]
 transform = Transform( 0.175676, 0, -0.984448, 0, 1, 0, 0.984448, 0, 0.175676, 1000, 0, 7.626 )
 
-[node name="GridContainer" type="GridContainer" parent="."]
+[node name="SplitScreenContainer" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-columns = 2
 script = ExtResource( 4 )
 
-[node name="ViewportContainerTL" type="ViewportContainer" parent="GridContainer"]
-margin_right = 510.0
-margin_bottom = 298.0
+[node name="VSplit" type="VBoxContainer" parent="SplitScreenContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SplitView" type="HBoxContainer" parent="SplitScreenContainer/VSplit"]
+margin_right = 1024.0
+margin_bottom = 198.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="ViewportContainerLeft" type="ViewportContainer" parent="SplitScreenContainer/VSplit/SplitView"]
+margin_right = 338.0
+margin_bottom = 198.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+
+[node name="Viewport" type="Viewport" parent="SplitScreenContainer/VSplit/SplitView/ViewportContainerLeft"]
+size = Vector2( 338, 198 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="ToothbrushControllerBR" type="Spatial" parent="SplitScreenContainer/VSplit/SplitView/ViewportContainerLeft/Viewport"]
+script = ExtResource( 3 )
+_toothbrush_path = NodePath("../../../../../../Toothbrush")
+
+[node name="Anchor" type="Position3D" parent="SplitScreenContainer/VSplit/SplitView/ViewportContainerLeft/Viewport"]
+transform = Transform( 0.5, 0.162188, -0.850703, 0, 0.982307, 0.187278, 0.866025, -0.0936392, 0.491153, -4, 1.387, 5.133 )
+
+[node name="RightCamera" type="Camera" parent="SplitScreenContainer/VSplit/SplitView/ViewportContainerLeft/Viewport/Anchor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.185, 1.261, 6.57 )
+
+[node name="ViewportContainerRear" type="ViewportContainer" parent="SplitScreenContainer/VSplit/SplitView"]
+margin_left = 342.0
+margin_right = 681.0
+margin_bottom = 198.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+
+[node name="Viewport" type="Viewport" parent="SplitScreenContainer/VSplit/SplitView/ViewportContainerRear"]
+size = Vector2( 339, 198 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="ToothbrushControllerTR" type="Spatial" parent="SplitScreenContainer/VSplit/SplitView/ViewportContainerRear/Viewport"]
+script = ExtResource( 3 )
+_toothbrush_path = NodePath("../../../../../../Toothbrush")
+
+[node name="Anchor" type="Position3D" parent="SplitScreenContainer/VSplit/SplitView/ViewportContainerRear/Viewport"]
+transform = Transform( -1, -2.99004e-08, -8.21505e-08, 0, 0.939693, -0.34202, 8.74228e-08, -0.34202, -0.939693, -1.09977e-08, 0.34563, -0.125799 )
+
+[node name="RearCamera" type="Camera" parent="SplitScreenContainer/VSplit/SplitView/ViewportContainerRear/Viewport/Anchor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.26485e-13, 3.22309, 8.56316 )
+
+[node name="ViewportContainerRight" type="ViewportContainer" parent="SplitScreenContainer/VSplit/SplitView"]
+margin_left = 685.0
+margin_right = 1024.0
+margin_bottom = 198.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+
+[node name="Viewport" type="Viewport" parent="SplitScreenContainer/VSplit/SplitView/ViewportContainerRight"]
+size = Vector2( 339, 198 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="ToothbrushControllerBL" type="Spatial" parent="SplitScreenContainer/VSplit/SplitView/ViewportContainerRight/Viewport"]
+script = ExtResource( 3 )
+_toothbrush_path = NodePath("../../../../../../Toothbrush")
+
+[node name="Anchor" type="Position3D" parent="SplitScreenContainer/VSplit/SplitView/ViewportContainerRight/Viewport"]
+transform = Transform( 0.514993, -0.160534, 0.842028, 0, 0.982307, 0.187278, -0.857194, -0.0964471, 0.505881, 4.008, 1.38653, 5.13344 )
+
+[node name="LeftCamera" type="Camera" parent="SplitScreenContainer/VSplit/SplitView/ViewportContainerRight/Viewport/Anchor"]
+transform = Transform( 1, 0, -5.96046e-08, 0, 1, 1.41561e-07, 0, -1.60187e-07, 1, 1.18533, 1.26082, 6.56981 )
+
+[node name="ViewportContainerFront" type="ViewportContainer" parent="SplitScreenContainer/VSplit"]
+margin_top = 202.0
+margin_right = 1024.0
+margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 stretch = true
@@ -35,87 +116,17 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="Viewport" type="Viewport" parent="GridContainer/ViewportContainerTL"]
-size = Vector2( 510, 298 )
+[node name="Viewport" type="Viewport" parent="SplitScreenContainer/VSplit/ViewportContainerFront"]
+size = Vector2( 1024, 398 )
 handle_input_locally = false
 render_target_update_mode = 3
 
-[node name="ToothbrushControllerTL" type="Spatial" parent="GridContainer/ViewportContainerTL/Viewport"]
+[node name="ToothbrushControllerTL" type="Spatial" parent="SplitScreenContainer/VSplit/ViewportContainerFront/Viewport"]
 script = ExtResource( 3 )
-_toothbrush_path = NodePath("../../../../Toothbrush")
+_toothbrush_path = NodePath("../../../../../Toothbrush")
 
-[node name="Anchor" type="Position3D" parent="GridContainer/ViewportContainerTL/Viewport"]
+[node name="Anchor" type="Position3D" parent="SplitScreenContainer/VSplit/ViewportContainerFront/Viewport"]
 transform = Transform( 1, 0, 0, 0, 0.853533, 0.521039, 0, -0.521039, 0.853533, 0, 0, 0 )
 
-[node name="FrontCamera" type="Camera" parent="GridContainer/ViewportContainerTL/Viewport/Anchor"]
+[node name="FrontCamera" type="Camera" parent="SplitScreenContainer/VSplit/ViewportContainerFront/Viewport/Anchor"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 14.9364 )
-
-[node name="ViewportContainerTR" type="ViewportContainer" parent="GridContainer"]
-margin_left = 514.0
-margin_right = 1024.0
-margin_bottom = 298.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-stretch = true
-
-[node name="Viewport" type="Viewport" parent="GridContainer/ViewportContainerTR"]
-size = Vector2( 510, 298 )
-handle_input_locally = false
-render_target_update_mode = 3
-
-[node name="ToothbrushControllerTR" type="Spatial" parent="GridContainer/ViewportContainerTR/Viewport"]
-script = ExtResource( 3 )
-_toothbrush_path = NodePath("../../../../Toothbrush")
-
-[node name="Anchor" type="Position3D" parent="GridContainer/ViewportContainerTR/Viewport"]
-transform = Transform( -1, -2.99004e-08, -8.21505e-08, 0, 0.939693, -0.34202, 8.74228e-08, -0.34202, -0.939693, -1.09977e-08, 0.34563, -0.125799 )
-
-[node name="RearCamera" type="Camera" parent="GridContainer/ViewportContainerTR/Viewport/Anchor"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.26485e-13, 3.22309, 8.56316 )
-
-[node name="ViewportContainerBL" type="ViewportContainer" parent="GridContainer"]
-margin_top = 302.0
-margin_right = 510.0
-margin_bottom = 600.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-stretch = true
-
-[node name="Viewport" type="Viewport" parent="GridContainer/ViewportContainerBL"]
-size = Vector2( 510, 298 )
-handle_input_locally = false
-render_target_update_mode = 3
-
-[node name="ToothbrushControllerBL" type="Spatial" parent="GridContainer/ViewportContainerBL/Viewport"]
-script = ExtResource( 3 )
-_toothbrush_path = NodePath("../../../../Toothbrush")
-
-[node name="Anchor" type="Position3D" parent="GridContainer/ViewportContainerBL/Viewport"]
-transform = Transform( 0.514993, -0.160534, 0.842028, 0, 0.982307, 0.187278, -0.857194, -0.0964471, 0.505881, 4.008, 1.38653, 5.13344 )
-
-[node name="LeftCamera" type="Camera" parent="GridContainer/ViewportContainerBL/Viewport/Anchor"]
-transform = Transform( 1, 0, -5.96046e-08, 0, 1, 1.41561e-07, 0, -1.60187e-07, 1, 1.18533, 1.26082, 6.56981 )
-
-[node name="ViewportContainerBR" type="ViewportContainer" parent="GridContainer"]
-margin_left = 514.0
-margin_top = 302.0
-margin_right = 1024.0
-margin_bottom = 600.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-stretch = true
-
-[node name="Viewport" type="Viewport" parent="GridContainer/ViewportContainerBR"]
-size = Vector2( 510, 298 )
-handle_input_locally = false
-render_target_update_mode = 3
-
-[node name="ToothbrushControllerBR" type="Spatial" parent="GridContainer/ViewportContainerBR/Viewport"]
-script = ExtResource( 3 )
-_toothbrush_path = NodePath("../../../../Toothbrush")
-
-[node name="Anchor" type="Position3D" parent="GridContainer/ViewportContainerBR/Viewport"]
-transform = Transform( 0.5, 0.162188, -0.850703, 0, 0.982307, 0.187278, 0.866025, -0.0936392, 0.491153, -4, 1.387, 5.133 )
-
-[node name="RightCamera" type="Camera" parent="GridContainer/ViewportContainerBR/Viewport/Anchor"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.185, 1.261, 6.57 )
