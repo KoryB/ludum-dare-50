@@ -30,7 +30,6 @@ public class Toothbrush : Spatial, IBrush
     {
         if (IsNewTargetTransformDirectionChange(target_transform))
         {
-            GD.Print("Direction Changed! ", _cleaned_cache.Count);
             _cleaned_cache.Clear();
         }
     
