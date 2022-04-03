@@ -40,7 +40,7 @@ size = Vector2( 510, 298 )
 handle_input_locally = false
 render_target_update_mode = 3
 
-[node name="ToothbrushController" type="Spatial" parent="GridContainer/ViewportContainerTL/Viewport"]
+[node name="ToothbrushControllerTL" type="Spatial" parent="GridContainer/ViewportContainerTL/Viewport"]
 script = ExtResource( 3 )
 _toothbrush_path = NodePath("../../../../Toothbrush")
 
@@ -63,7 +63,7 @@ size = Vector2( 510, 298 )
 handle_input_locally = false
 render_target_update_mode = 3
 
-[node name="ToothbrushController" type="Spatial" parent="GridContainer/ViewportContainerTR/Viewport"]
+[node name="ToothbrushControllerTR" type="Spatial" parent="GridContainer/ViewportContainerTR/Viewport"]
 script = ExtResource( 3 )
 _toothbrush_path = NodePath("../../../../Toothbrush")
 
@@ -71,7 +71,7 @@ _toothbrush_path = NodePath("../../../../Toothbrush")
 transform = Transform( -1, -2.99004e-08, -8.21505e-08, 0, 0.939693, -0.34202, 8.74228e-08, -0.34202, -0.939693, -1.09977e-08, 0.34563, -0.125799 )
 
 [node name="RearCamera" type="Camera" parent="GridContainer/ViewportContainerTR/Viewport/Anchor"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.46383 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.26485e-13, 3.22309, 8.56316 )
 
 [node name="ViewportContainerBL" type="ViewportContainer" parent="GridContainer"]
 margin_top = 302.0
@@ -86,7 +86,7 @@ size = Vector2( 510, 298 )
 handle_input_locally = false
 render_target_update_mode = 3
 
-[node name="ToothbrushController2" type="Spatial" parent="GridContainer/ViewportContainerBL/Viewport"]
+[node name="ToothbrushControllerBL" type="Spatial" parent="GridContainer/ViewportContainerBL/Viewport"]
 script = ExtResource( 3 )
 _toothbrush_path = NodePath("../../../../Toothbrush")
 
@@ -94,7 +94,7 @@ _toothbrush_path = NodePath("../../../../Toothbrush")
 transform = Transform( 0.514993, -0.160534, 0.842028, 0, 0.982307, 0.187278, -0.857194, -0.0964471, 0.505881, 4.008, 1.38653, 5.13344 )
 
 [node name="LeftCamera" type="Camera" parent="GridContainer/ViewportContainerBL/Viewport/Anchor"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.38419e-07, 0, 3.69907 )
+transform = Transform( 1, 0, -5.96046e-08, 0, 1, 1.41561e-07, 0, -1.60187e-07, 1, 1.18533, 1.26082, 6.56981 )
 
 [node name="ViewportContainerBR" type="ViewportContainer" parent="GridContainer"]
 margin_left = 514.0
@@ -110,7 +110,7 @@ size = Vector2( 510, 298 )
 handle_input_locally = false
 render_target_update_mode = 3
 
-[node name="ToothbrushController2" type="Spatial" parent="GridContainer/ViewportContainerBR/Viewport"]
+[node name="ToothbrushControllerBR" type="Spatial" parent="GridContainer/ViewportContainerBR/Viewport"]
 script = ExtResource( 3 )
 _toothbrush_path = NodePath("../../../../Toothbrush")
 
@@ -118,4 +118,4 @@ _toothbrush_path = NodePath("../../../../Toothbrush")
 transform = Transform( 0.5, 0.162188, -0.850703, 0, 0.982307, 0.187278, 0.866025, -0.0936392, 0.491153, -4, 1.387, 5.133 )
 
 [node name="RightCamera" type="Camera" parent="GridContainer/ViewportContainerBR/Viewport/Anchor"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.38419e-07, 0, 3.69907 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.185, 1.261, 6.57 )

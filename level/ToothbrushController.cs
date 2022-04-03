@@ -24,22 +24,26 @@ public class ToothbrushController : Spatial
     
     public override void _PhysicsProcess(float delta)
     {
-        var r = CastRayFromCamera();
-        var t = CalculateTargetTransform(r);
+        var mouse_pos = GetViewport().GetMousePosition();
         
-        if (t.HasValue)
+        if (GetViewport().GetVisibleRect().HasPoint(mouse_pos))
         {
-            _toothbrush.SetTargetTransform(t.Value);
+            var r = CastRayFromCamera(mouse_pos);
+            var t = CalculateTargetTransform(r);
+            
+            if (t.HasValue)
+            {            
+                _toothbrush.SetTargetTransform(t.Value);
+            }
         }
     }
     
-    private Dictionary CastRayFromCamera()
+    private Dictionary CastRayFromCamera(Vector2 screen_position)
     {
-        var mouse_pos = GetViewport().GetMousePosition();
         var camera = GetViewport().GetCamera();
         
-        var from = camera.ProjectRayOrigin(mouse_pos);
-        var to = from + camera.ProjectRayNormal(mouse_pos) * RayLength;
+        var from = camera.ProjectRayOrigin(screen_position);
+        var to = from + camera.ProjectRayNormal(screen_position) * RayLength;
         
         var result = GetWorld().DirectSpaceState.IntersectRay(from, to);
         
