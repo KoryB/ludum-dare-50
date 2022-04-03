@@ -4,7 +4,7 @@ using System.Linq;
 
 public class Jawline : Spatial
 {
-    private static PackedScene ParticleScene = ResourceLoader.Load("res://particle/Particle.tscn") as PackedScene;
+    private static PackedScene ParticleScene = ResourceLoader.Load("res://particle/Food.tscn") as PackedScene;
     private const float RayLength = 1000.0f;
     
     [Export]

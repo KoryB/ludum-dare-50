@@ -4,15 +4,18 @@ using System;
 public class Particle : StaticBody, IBrushable
 {
     [Signal]
-    delegate void OnDeath();
+    public delegate void OnDeath();
 
     [Export]
-    private float _max_health = 10.0f;
-    private float _health;
+    protected float _max_health = 10.0f;
+    protected float _health;
+    
+    protected Area _area;
     
     public override void _Ready()
     {
         _health = _max_health;
+        _area = GetNode<Area>("Area");
     }
     
     public void Brush(IBrush brush)
