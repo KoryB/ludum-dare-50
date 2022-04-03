@@ -47,6 +47,7 @@ public class Jawline : Spatial
         
         while (!final_position.HasValue)
         {
+            path_location += _rng.RandfRange(-0.3f, 0.3f);
             inflation_angle_degrees = _rng.RandfRange(-half_inflation_angle_range_degrees, half_inflation_angle_range_degrees);
             forward_angle_degrees = _rng.RandfRange(-half_forward_angle_range_degrees, half_forward_angle_range_degrees);
             
