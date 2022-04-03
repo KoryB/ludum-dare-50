@@ -25,18 +25,6 @@ public class Jawline : Spatial
     {
         _path = GetNode<Path>("Path");
         _curve = _path.Curve;
-        
-        for (int i = 0; i < _curve.GetPointCount(); i++)
-        {
-            GD.Print(_curve.GetPointPosition(i));
-        }
-        
-        GD.Print("---");
-        
-        for (int i = 0; i < _curve.GetBakedPoints().Count(); i++)
-        {
-            GD.Print(_curve.GetBakedPoints()[i]);
-        }
     }
 
 
@@ -62,8 +50,6 @@ public class Jawline : Spatial
                 MathUtils.DegreesToRadians(inflation_angle_degrees),
                 MathUtils.DegreesToRadians(forward_angle_degrees)
             );
-            
-            GD.Print(path_location, " ", inflation_angle_degrees, forward_angle_degrees);
         }
         
         var particle = (Particle) ParticleScene.Instance();
@@ -89,6 +75,8 @@ public class Jawline : Spatial
             .Normalized();
         var normal = forward.Cross(up).Normalized();
         
+        GD.Print(Name, " Up: ", up);
+        
         var inflation_direction = up
             .Rotated(forward, inflation_angle)
             .Rotated(normal, forward_angle);
@@ -112,6 +100,3 @@ public class Jawline : Spatial
         SpawnParticle(_rng.Randf());
     }
 }
-
-
-
