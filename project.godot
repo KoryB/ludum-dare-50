@@ -16,7 +16,9 @@ config/icon="res://icon.png"
 
 [autoload]
 
+Audio="*res://level/audio/Audio.tscn"
 PlayerVariables="*res://utils/PlayerVariables.cs"
+ScreenShotter="*res://utils/ScreenShotter.cs"
 
 [physics]
 

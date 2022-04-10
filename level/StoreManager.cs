@@ -62,7 +62,7 @@ public class StoreManager : Node
     
     private void ShowNotEnoughMoney()
     {
-        GD.Print("timeout");
+        GetNode<AudioStreamPlayer>("NoMoneyPlayer").Play();
         
         GetNode<Timer>("HideTextTimer").Start();
         GetNode<Label>("../ShopScreenContainer/Title/LblNotEnoughMoney").Visible = true;
@@ -77,6 +77,7 @@ public class StoreManager : Node
         
             _toothbrush_level = Math.Min(_toothbrush_level + 1, 3);
             GetNode<Toothbrush>("../Toothbrush").LevelUp();
+            GetNode<AudioStreamPlayer>("SelectPlayer").Play();
             
             UpdateStoreCosts();
         }
@@ -92,6 +93,7 @@ public class StoreManager : Node
         {
             _game_manager.SpendMoney(_teeth_whitening_cost);
             _game_manager.WhitenTeeth();
+            GetNode<AudioStreamPlayer>("SelectPlayer").Play();
             
             UpdateStoreCosts();
         }
@@ -107,6 +109,7 @@ public class StoreManager : Node
         {
             _game_manager.SpendMoney(_pull_cost);
             _game_manager.PullTeeth();
+            GetNode<AudioStreamPlayer>("SelectPlayer").Play();
             
             UpdateStoreCosts();
         }

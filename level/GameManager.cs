@@ -176,6 +176,7 @@ public class GameManager : Node
     {
         PlayerVariables.Score += 1;
         _money += 1;
+        GetNode<AudioStreamPlayer>("BrushedPlayer").Play();
     }
 
 

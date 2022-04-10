@@ -11,6 +11,7 @@ public class End : Control
     private void _on_BtnStart_pressed()
     {
         PlayerVariables.Score = 0;
+        GetNode<AudioStreamPlayer>("MenuPlayer").Play();
         GetTree().ChangeScene("res://level/TestLevel.tscn");
     }
 

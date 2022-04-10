@@ -23,6 +23,8 @@ public class Toothbrush : Spatial, IBrush
     
     private Transform _previous_transform;
     private Transform _target_transform;
+    
+    private RandomNumberGenerator _rng = new RandomNumberGenerator();
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -39,6 +41,9 @@ public class Toothbrush : Spatial, IBrush
         if (IsNewTargetTransformDirectionChange(target_transform))
         {
             _cleaned_cache.Clear();
+            
+            var i = _rng.RandiRange(1, 4);
+            GetNode<AudioStreamPlayer>($"Audio/BrushPlayer{i}").Play();
         }
     
         _transform_interpolation_timer = 0.0f;

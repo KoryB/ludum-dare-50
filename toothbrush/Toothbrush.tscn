@@ -1,6 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://toothbrush/Toothbrush.cs" type="Script" id=1]
+[ext_resource path="res://sound/brush3.wav" type="AudioStream" id=2]
+[ext_resource path="res://sound/brush1.wav" type="AudioStream" id=3]
+[ext_resource path="res://sound/brush2.wav" type="AudioStream" id=4]
+[ext_resource path="res://sound/brush4.wav" type="AudioStream" id=5]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.901961, 0.341176, 0.0196078, 1 )
@@ -12,6 +16,28 @@ extents = Vector3( 0.4, 0.5, 1 )
 script = ExtResource( 1 )
 _strength_progression = [ 1.0, 2.0, 3.0 ]
 _color_progression = [ Color( 0.901961, 0.341176, 0.0196078, 1 ), Color( 0.270588, 0.921569, 0.419608, 1 ), Color( 0.101961, 0.862745, 0.792157, 1 ) ]
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="BrushPlayer1" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 3 )
+volume_db = -12.0
+pitch_scale = 0.5
+
+[node name="BrushPlayer2" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 4 )
+volume_db = -12.0
+pitch_scale = 0.5
+
+[node name="BrushPlayer3" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 2 )
+volume_db = -12.0
+pitch_scale = 0.5
+
+[node name="BrushPlayer4" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 5 )
+volume_db = -12.0
+pitch_scale = 0.5
 
 [node name="Brush" type="CSGBox" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 7.45058e-09 )
